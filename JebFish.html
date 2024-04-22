@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personal Website</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+    /* Background and body styling */
+    body {
+      margin: 0;
+      padding-top: 50px; /* Adjust this value to set how far down from the top the text starts */
+      background-color: #f3efdc; /* Soft color for the background */
+      font-family: 'Lora', serif;
+      overflow: hidden;
+    }
+
+      /* Container for the text, to align it properly */
+  .header-container {
+    text-align: center; /* Centers text horizontally */
+    max-width: 800px; /* Set a max-width for the container */
+    margin: 0 auto; /* Centers the container in the middle of the page */
+  }
+    .italic-500 {
+        font-style: italic;
+        font-weight: 500;
+    }
+
+    /* Container for the text, to align it properly */
+    .header-container {
+      width: 100%;
+      text-align: center; /* Centers text horizontally */
+    }
+  
+    /* Style for the name */
+    .name {
+    font-size: 4em; /* Adjust size as needed */
+    font-weight: 500; /* Lora font weight */
+    font-style: italic; /* Lora font style */
+    color: #000000; /* Name text color */
+    margin-bottom: 0.15em; /* Space between name and title */
+    
+    }
+  
+    /* Style for the role or title */
+    .title {
+      font-size: .8em; /* Adjust size as needed */
+      color: #000000; /* Title text color */
+      margin-bottom: 3em; /* Space between title and description */
+    }
+  
+/* Style for the description and bullet points */
+.description, .description ul {
+    font-size: 1em; /* Adjust size as needed */
+    color: #000000; /* Description text color */
+    text-align: left; /* Aligns text to the left */
+    display: inline-block; /* Aligns the block with the text above */
+    margin: 0; /* Removes default margin */
+    padding: 0; /* Removes default padding */
+  }
+
+  .description ul {
+    list-style: inside; /* Places bullet points inside the container */
+    padding-left: 1em; /* Adds padding inside the list for proper indentation */
+  }
+
+  .description li {
+    text-align: left; /* Align list items to the left */
+    margin-bottom: 0.5em; /* Space between list items */
+  }
+
+  .triangle {
+    position: absolute;
+    width: 10px; /* Smaller size */
+    height: 10px; /* Smaller size */
+    background-color: rgb(123, 161, 194); /* Choose a 'cute' color */
+    border-radius: 50%; /* Makes the shape a circle */
+    pointer-events: none;
+    will-change: transform;
+  }
+
+  a {
+    text-decoration: none; /* Removes underline */
+    color: inherit; /* The link will inherit the color from the parent element */
+  }
+  
+  /* Optional: Style for hover state */
+  a:hover {
+    text-decoration: underline; /* Adds underline on hover for usability */
+  }
+  
+  
+</style>
+</head>
+<body>
+<!-- Header container for the name and description -->
+<div class="header-container">
+    <div class="name">Jeb Henry Head</div>
+    <div class="title">(henry)</div>
+    <div class="description">
+      Currently at OpenAI, working on safe AI through Model Policy and Human-AI interaction <br>
+      <br><br>  notion mor let's be friends:
+      <br>
+      <ul>
+        <li><a href="https://www.strava.com/athletes/45235516" target="_blank">SF Bike Buddy?</a></li>
+        <li><a href="https://link.chess.com/friend/0woSUI" target="_blank">Blitz Chess</a></li>
+        <li><a href="https://jebhenryhead.substack.com/?utm_source=%2Fprofile%2F18766156-jeb-henry-head&utm_medium=reader2&utm_campaign=substack_profile" target="_blank">Read about my dumb ski-racing dream</a></li>
+        <li><a href="https://www.linkedin.com/in/jebhenryhead/" target="_blank">LinkedIn (lol)</a></li>
+      </ul>
+      
+    </div>
+  </div>
+  
+<script>
+  // Function to create a "swim" effect for the triangle
+  function swim(circle, startTime, startX, startY) {
+    let angle = Math.random() * Math.PI * 2; // Start with a random angle
+    let velocity = 0.2; // How fast the circle moves
+  
+    const swimAnimation = (time) => {
+      const deltaTime = time - startTime;
+      startTime = time; // Update the start time for the next frame
+      let x = startX + Math.cos(angle) * velocity * deltaTime;
+      let y = startY + Math.sin(angle) * velocity * deltaTime;
+  
+      // Bounce off the right side of the screen
+      if (x > window.innerWidth - circle.offsetWidth) {
+        x = window.innerWidth - circle.offsetWidth; // Prevent sticking to the edge
+        angle = Math.PI - angle; // Reflect the angle
+      }
+  
+      // Bounce off the left side of the screen
+      if (x < 0) {
+        x = 0; // Prevent sticking to the edge
+        angle = Math.PI - angle; // Reflect the angle
+      }
+  
+      // Update positions
+      circle.style.left = x + 'px';
+      circle.style.top = y + 'px';
+  
+      // Update for next move
+      startX = x;
+      startY = y;
+  
+      // Keep animating
+      requestAnimationFrame(swimAnimation);
+    };
+  
+    requestAnimationFrame(swimAnimation);
+  }
+  
+  
+
+  // Event listener for creating and animating triangles on click
+  document.addEventListener('mousedown', handleMouseDown);
+  document.addEventListener('mouseup', handleMouseUp);
+  document.addEventListener('mousemove', handleMouseMove);
+  
+  let isMouseDown = false;
+  
+  function handleMouseDown(e) {
+    isMouseDown = true;
+    makeCircle(e);
+  }
+  
+  function handleMouseUp() {
+    isMouseDown = false;
+  }
+  
+  function handleMouseMove(e) {
+    if (isMouseDown) {
+      makeCircle(e);
+    }
+  }
+  
+  function makeCircle(e) {
+    let circle = document.createElement('div');
+    circle.className = 'triangle';  // Consider renaming this class to 'circle' for clarity
+    document.body.appendChild(circle);
+    swim(circle, performance.now(), e.pageX, e.pageY);
+  }
+  
+  function swim(circle, startTime, startX, startY) {
+    let angle = Math.random() * Math.PI * 2; // Random angle for initial movement
+    let velocity = 0.2; // Velocity of the circle's movement
+  
+    const swimAnimation = (time) => {
+      const deltaTime = time - startTime;
+      startTime = time;
+      let x = startX + Math.cos(angle) * velocity * deltaTime;
+      let y = startY + Math.sin(angle) * velocity * deltaTime;
+  
+      // Bounce off the right side of the screen
+      if (x > window.innerWidth - circle.offsetWidth) {
+        x = window.innerWidth - circle.offsetWidth;
+        angle = Math.PI - angle;
+      }
+      // Bounce off the left side of the screen
+      if (x < 0) {
+        x = 0;
+        angle = Math.PI - angle;
+      }
+  
+      circle.style.left = x + 'px';
+      circle.style.top = y + 'px';
+  
+      startX = x;
+      startY = y;
+  
+      requestAnimationFrame(swimAnimation);
+    };
+  
+    requestAnimationFrame(swimAnimation);
+  }
+  
+// The rest of your existing code here, including the swim function...
+
+  
+  // The rest of your existing code here, including the swim function...
+  
+</script>
+</body>
+</html>
